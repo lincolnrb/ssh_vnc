@@ -1,14 +1,11 @@
+require 'yaml'
+
 class SshVnc
-  
-  # should also add 'display' as an option instead of assuming :0  
-  VNC_SERVERS = [
-    { :name => "VNC Server Name 1", :ip => "192.168.1.9", :gateway => "user@remoteloc1.org -p 2222" },
-    { :name => "VNC Server Name 2", :ip => "192.168.1.12", :gateway => "user@remoteloc1.org -p 2222" },
-    { :name => "VNC Server Name 3", :ip => "192.168.4.3", :gateway => "user@remoteloc2.org -p 2222" },
-    { :name => "VNC Server Name 4", :ip => "192.168.5.151", :gateway => "user@remoteloc2.org -p 2222" }
-  ]
+  VNC_SERVERS = []
   
   def initialize
+    log = File.open(File.dirname(__FILE__) + "/vnc_servers.yml")
+    YAML::load_documents(log) { |doc| VNC_SERVERS.push(doc) }
     display_options
   end
   
@@ -72,7 +69,7 @@ class SshVnc
       `kill -9 #{pid}`
       break
     end
-
+     
   end
   
   SshVnc.new
