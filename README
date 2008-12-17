@@ -1,0 +1,29 @@
+= ssh_vnc.rb
+
+Author: Bryan Thompson
+Date: 12/16/08
+Web: http://www.lincolnrb.org
+License: MIT (http://www.opensource.org/licenses/mit-license.php)
+
+= Preface
+
+I'm sure there are a lot of ways this can be improved.
+Feel free to make any modifications you'd like.  I only took
+about 30 minutes to write this, so I am sure there's a lot
+that can be cleaned up.
+
+= Intention
+
+* keep track of our various VNC machines
+* make it easy to start a ssh+vnc tunnel
+
+= To Use
+
+Edit ssh_vnc.rb to include your target VNC servers
+1. From terminal: ruby ssh_vnc.rb
+2. select the tunnel to set up
+3. Start your favorite VNC Client and point to localhost, display 0, 
+with the password of your target vnc server
+4. When finished, close your VNC client and hit enter in the 
+terminal and the script will try to close it for you.
+
