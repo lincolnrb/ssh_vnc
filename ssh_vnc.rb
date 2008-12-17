@@ -1,5 +1,6 @@
 class SshVnc
-
+  
+  # should also add 'display' as an option instead of assuming :0  
   VNC_SERVERS = [
     { :name => "VNC Server Name 1", :ip => "192.168.1.9", :gateway => "user@remoteloc1.org -p 2222" },
     { :name => "VNC Server Name 2", :ip => "192.168.1.12", :gateway => "user@remoteloc1.org -p 2222" },
@@ -54,7 +55,7 @@ class SshVnc
       # If there's a better way to dump the pid directly into ruby, let's do it that way.  Writing 
       # and reading files seems to be lazy. -bt
 
-      `ps aux | grep 5800:10.68.250.54:5800 | grep -v grep | awk '{print $2}' > /tmp/ssh_vnc.pid`
+      `ps aux | grep 5800:#{VNC_SERVERS[choice][:ip]}:5800 | grep -v grep | awk '{print $2}' > /tmp/ssh_vnc.pid`
       if File.exists?("/tmp/ssh_vnc.pid")
         f = File.open("/tmp/ssh_vnc.pid", "r")
         pid = f.read.gsub(/[^0-9]/, " ")
@@ -64,7 +65,7 @@ class SshVnc
       
     end
 
-    puts "Tunnel instantiated.  Press any key when you are finished and it will be closed."
+    puts "Tunnel instantiated.  Hit the enter key when you are finished and it will be closed."
 
     while( command = gets ) do
       puts "kill -9 #{pid}"
